@@ -1,4 +1,4 @@
-import 'package:book_reader/network/network.dart';
+
 import 'package:book_reader/pages/favorite_screen.dart';
 import 'package:book_reader/pages/home_screen.dart';
 import 'package:book_reader/pages/saved_screen.dart';
@@ -35,35 +35,21 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [const HomeScreen(), const SavedScreen(), const FavoriteScreen()];
-   
-   Network network = Network();
-
-   Future<void> _searchBooks(String query) async {
-    try{
-
-    final books = await network.searchBooks(query);
-
-    }catch(e){
-        
-    }
-   }
+  final List<Widget> _screens = [
+    const HomeScreen(),
+    const SavedScreen(),
+    const FavoriteScreen()
+  ];
 
   @override
   Widget build(BuildContext context) {
-    print(_currentIndex);
+  
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Book Reader"),
       ),
-
-
-
       body: _screens[_currentIndex],
-
-
-
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         currentIndex: _currentIndex,

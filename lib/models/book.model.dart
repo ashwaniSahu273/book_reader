@@ -1,4 +1,5 @@
 class Book {
+  final String id;
   final String title;
   final List<String> authors;
   final String publisher;
@@ -16,6 +17,7 @@ class Book {
   final String canonicalVolumeLink;
 
   Book({
+    required this.id,
     required this.title,
     required this.authors,
     required this.publisher,
@@ -34,24 +36,26 @@ class Book {
   });
 
   factory Book.fromJson(Map<String, dynamic> json) {
+    var volumeInfo = json['volumeInfo'] ?? {};
     return Book(
-      title: json['title'],
-      authors: List<String>.from(json['authors']),
-      publisher: json['publisher'],
-      publishedDate: json['publishedDate'],
-      description: json['description'],
-      industryIdentifiers: (json['industryIdentifiers'] as List)
+      id: json['id'] ?? '',
+      title: volumeInfo['title'] ?? '',
+      authors: List<String>.from(volumeInfo['authors']),
+      publisher: volumeInfo['publisher'] ?? '',
+      publishedDate: volumeInfo['publishedDate'] ?? '',
+      description: volumeInfo['description'] ?? '',
+      industryIdentifiers: (volumeInfo['industryIdentifiers'] as List)
           .map((e) => IndustryIdentifier.fromJson(e))
           .toList(),
-      pageCount: json['pageCount'],
-      printType: json['printType'],
-      categories: List<String>.from(json['categories']),
-      maturityRating: json['maturityRating'],
-      imageLinks: ImageLinks.fromJson(json['imageLinks']),
-      language: json['language'],
-      previewLink: json['previewLink'],
-      infoLink: json['infoLink'],
-      canonicalVolumeLink: json['canonicalVolumeLink'],
+      pageCount: volumeInfo['pageCount'] ?? 0,
+      printType: volumeInfo['printType'] ?? '',
+      categories: List<String>.from(volumeInfo['categories']),
+      maturityRating: volumeInfo['maturityRating'] ?? '',
+      imageLinks: ImageLinks.fromJson(volumeInfo['imageLinks']) ,
+      language: volumeInfo['language'] ?? '',
+      previewLink: volumeInfo['previewLink'] ?? '',
+      infoLink: volumeInfo['infoLink'] ?? '',
+      canonicalVolumeLink: volumeInfo['canonicalVolumeLink'] ?? '',
     );
   }
 }
